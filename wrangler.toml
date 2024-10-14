@@ -1,0 +1,50 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "moondiary"
+main = "src/index.js"
+compatibility_date = "2024-10-11"
+compatibility_flags = ["nodejs_compat"]
+
+# Workers Logs
+# Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
+# Configuration: https://developers.cloudflare.com/workers/observability/logs/workers-logs/#enable-workers-logs
+[observability]
+enabled = true
+
+# Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)
+# Docs:
+# - https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
+# Note: Use secrets to store sensitive data.
+# - https://developers.cloudflare.com/workers/configuration/secrets/
+# [vars]
+BOT_INFO = """{
+  "id": 7244594086,
+  "is_bot": true,
+  "first_name": "Moondiary",
+  "username": "moondiarysbot",
+  "can_join_groups": true,
+  "can_read_all_group_messages": false,
+  "supports_inline_queries": false,
+  "can_connect_to_business": false,
+  "has_main_web_app": false
+}"""
+
+# Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#d1-databases
+d1_databases = [
+  { binding = "diary_db", database_name = "moon_diary", database_id = "908fabd2-a424-4f37-96ac-3fe6fdf8d7c1" },
+  { binding = "user_db", database_name = "moon_user", database_id = "a80215de-5990-4a48-bfef-208e34f01ef4" }
+]
+
+# Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+
+# Bind an R2 Bucket. Use R2 to store arbitrarily large blobs of data, such as files.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#r2-buckets
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
