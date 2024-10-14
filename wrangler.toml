@@ -15,7 +15,7 @@ enabled = true
 # - https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 # Note: Use secrets to store sensitive data.
 # - https://developers.cloudflare.com/workers/configuration/secrets/
-# [vars]
+[vars]
 BOT_INFO = """{
   "id": 7244594086,
   "is_bot": true,
@@ -30,10 +30,10 @@ BOT_INFO = """{
 
 # Bind a D1 database. D1 is Cloudflare’s native serverless SQL database.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#d1-databases
-d1_databases = [
-  { binding = "diary_db", database_name = "moon_diary", database_id = "908fabd2-a424-4f37-96ac-3fe6fdf8d7c1" },
-  { binding = "user_db", database_name = "moon_user", database_id = "a80215de-5990-4a48-bfef-208e34f01ef4" }
-]
+[[d1_databases]]
+binding = "moondb"
+database_name = "moon"
+database_id = "55d99d6d-bbc7-4f71-bd87-d7430f8655f8"
 
 # Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
