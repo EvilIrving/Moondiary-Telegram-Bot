@@ -1,4 +1,6 @@
 import { Bot } from 'grammy';
+import { hydrateReply, parseMode } from '@grammyjs/parse-mode';
+
 let bot;
 const getBot = () => {
 	if (!bot) {
@@ -11,6 +13,12 @@ const setBot = (env) => {
 		return bot;
 	}
 	bot = new Bot(env.BOT_TOKEN, { botInfo: JSON.parse(env.BOT_INFO) });
+
+	// Install the plugin.
+	bot.use(hydrateReply);
+
+	// Set the default parse mode for ctx.reply.
+	bot.api.config.use(parseMode('MarkdownV2'));
 	return bot;
 };
 

@@ -17,7 +17,7 @@ class Diary {
 	}
 
 	async saveDiary(userid, diaryData) {
-		const { emotionType, situationDescription, emotion, emotionIntensity, reaction, result, timestamp } = diaryData;
+		const { step1, step2, step3, step4, step5, step6, step7, step8, timestamp } = diaryData;
 
 		const { results } = await this.db.prepare('SELECT username FROM users WHERE userid = ?').bind(userid).all();
 
@@ -31,12 +31,11 @@ class Diary {
 			.prepare(
 				`
 			INSERT INTO diary (
-			  userid, username, emotionType, situationDescription,
-			  emotion, emotionIntensity, reaction, result, timestamp, curstep
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)
+			  userid, username, step1, step2, step3, step4, step5, step6, step7, step8, curstep
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 8)
 		  `
 			)
-			.bind(userid, username, emotionType, situationDescription, emotion, emotionIntensity, reaction, result, timestamp.toISOString())
+			.bind(userid, username, step1, step2, step3, step4, step5, step6, step7, step8, timestamp)
 			.run();
 
 		// 更新用户的日记数量
@@ -46,13 +45,15 @@ class Diary {
 			id: meta.last_row_id,
 			userid,
 			username,
-			emotionType,
-			situationDescription,
-			emotion,
-			emotionIntensity,
-			reaction,
-			result,
-			timestamp: timestamp.toISOString(),
+			step1,
+			step2,
+			step3,
+			step4,
+			step5,
+			step6,
+			step7,
+			step8,
+			timestamp,
 			curstep: 1,
 		};
 	}
@@ -116,7 +117,7 @@ const getDiaryModel = () => {
 	return diaryModel;
 };
 const setDiaryModel = (env) => {
- 
+
 	if (diaryModel) {
 		return diaryModel;
 	}
